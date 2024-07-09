@@ -23,6 +23,9 @@ class User(AbstractUser):
     def __self__(self):
         return self.email
     
+    def __unicode__(self):
+        return self.username
+    
     def save(self, *args, **kwargs):
         email_username, mobile = self.email.split('@')
         if self.full_name == '' or self.full_name == None:
