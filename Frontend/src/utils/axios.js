@@ -11,4 +11,4 @@ const apiInstance = axios.create({
     }
 })
 
-export { apiInstance }
+export default apiInstance 
