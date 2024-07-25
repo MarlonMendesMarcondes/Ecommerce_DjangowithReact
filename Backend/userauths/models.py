@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
-
+from django.contrib.auth import password_validation
 from shortuuid.django_fields import ShortUUIDField
 
 GENDER = (
@@ -32,7 +32,17 @@ class User(AbstractUser):
             self.full_name = email_username
         if self.username == '' or self.username == None:
             self.username = email_username
+                
+        if self.pk is None:
+            self.set_password(self.password)
+        else:
+            # Retrieve the current user object to compare the password
+            existing_user = User.objects.get(pk=self.pk)
+            if existing_user.password != self.password:
+                self.set_password(self.password)
         super(User, self).save(*args, **kwargs)
+        
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
