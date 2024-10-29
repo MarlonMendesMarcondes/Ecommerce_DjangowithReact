@@ -5,11 +5,12 @@ import { useAuthStore } from '../../store/auth'
 import { Link } from 'react-router-dom';
 
 const Login = () => {
-  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  
 
   useEffect(() => {
       if (isLoggedIn()) {
